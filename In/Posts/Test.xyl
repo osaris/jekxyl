@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<overlay xmlns="http://hoa-project.net/xyl/xylophone">
+  <div id="main">
+    <p>My first blog post</p>
+  </div>
+</overlay>
