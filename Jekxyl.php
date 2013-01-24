@@ -1,6 +1,7 @@
 <?php
 
 require_once '/usr/local/lib/Hoa/Core/Core.php';
+require_once 'XylExtensionFilter.php';
 
 from('Hoa')
 -> import('Xyl.~')
@@ -21,11 +22,23 @@ if(file_exists('hoa://Out')) {
 }
 Hoa\File\Directory::create('hoa://Out');
 
-$xyl =  new Hoa\Xyl(
-          new Hoa\File\Read('hoa://In/Layout.xyl'),
-          new Hoa\File\Write('hoa://Out/index.html'),
-          new Hoa\Xyl\Interpreter\Html()
-        );
 
-$xyl->addOverlay('hoa://In/Posts/Test.xyl');
-$xyl->render();
+
+// Loop through the directory listing
+$dir = new XylExtensionFilter(new DirectoryIterator('hoa://In/Posts/'));
+foreach ($dir as $item) {
+
+  $filename = pathinfo($item, PATHINFO_FILENAME);
+
+  $layout = new Hoa\File\Read('hoa://In/Layout.xyl');
+  $xyl =  new Hoa\Xyl(
+            $layout,
+            new Hoa\File\Write('hoa://Out/'.$filename.'.html'),
+            new Hoa\Xyl\Interpreter\Html()
+          );
+  $xyl->addOverlay('hoa://In/Posts/'.$item);
+  $xyl->render();
+
+  unset($xyl);
+  unset($layout);
+}
