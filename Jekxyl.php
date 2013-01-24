@@ -22,15 +22,13 @@ if(file_exists('hoa://Out')) {
 }
 Hoa\File\Directory::create('hoa://Out');
 
-
+$layout = new Hoa\File\Read('hoa://In/Layout.xyl');
 
 // Loop through the directory listing
 $dir = new XylExtensionFilter(new DirectoryIterator('hoa://In/Posts/'));
 foreach ($dir as $item) {
 
   $filename = pathinfo($item, PATHINFO_FILENAME);
-
-  $layout = new Hoa\File\Read('hoa://In/Layout.xyl');
   $xyl =  new Hoa\Xyl(
             $layout,
             new Hoa\File\Write('hoa://Out/'.$filename.'.html'),
@@ -38,7 +36,4 @@ foreach ($dir as $item) {
           );
   $xyl->addOverlay('hoa://In/Posts/'.$item);
   $xyl->render();
-
-  unset($xyl);
-  unset($layout);
 }
