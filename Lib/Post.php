@@ -2,8 +2,9 @@
 
 class Post {
 
-  private $_xyl;
-  private $_filename;
+  private $_xyl      = null;
+
+  private $_filename = '';
 
   public function __construct($item, $layout) {
 

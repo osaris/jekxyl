@@ -8,7 +8,8 @@ _define('STDOUT', fopen('php://stdout', 'wb'));
 class Builder {
 
   private $_posts = array();
-  private $_layout;
+
+  private $_layout = '';
 
   public function __construct() {
 
