@@ -1,6 +1,6 @@
 Jekxyl is a static blog generator built with [Hoa](http://hoa-project.net) and
-inspired from [Jekyll](https://github.com/mojombo/jekyll) (among other things,
-the tool behind Github pages).
+inspired from [Jekyll](https://github.com/mojombo/jekyll) (used, among other
+things, by Github for Github pages service).
 
 ## Quick usage
 
