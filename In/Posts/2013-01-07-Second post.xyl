@@ -2,6 +2,7 @@
 
 <overlay xmlns="http://hoa-project.net/xyl/xylophone">
   <div id="main">
+    <h1 id="title">Title second post</h1>
     <p>Now with multiple posts generator.</p>
   </div>
 </overlay>

@@ -2,6 +2,7 @@
 
 <overlay xmlns="http://hoa-project.net/xyl/xylophone">
   <div id="main">
+    <h1 id="title">Title first post</h1>
     <p>My first blog post</p>
   </div>
 </overlay>
