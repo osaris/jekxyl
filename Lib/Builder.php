@@ -70,7 +70,7 @@ class Builder {
 
     foreach($this->_posts as $post) {
       $data->posts[] = array('title' => $post->getTitle(),
-                             'filename' => $post->getFilename());
+                             'url' => $post->getOutputFilename());
     }
 
     $index->addOverlay('hoa://In/Index.xyl');

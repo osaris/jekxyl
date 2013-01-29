@@ -12,7 +12,7 @@ class Post {
 
     $this->_xyl =  new Hoa\Xyl(
                       $layout,
-                      new Hoa\File\Write('hoa://Out/' . $this->_filename . '.html'),
+                      new Hoa\File\Write('hoa://Out/' . $this->getOutputFilename()),
                       new Hoa\Xyl\Interpreter\Html()
                     );
     $this->_xyl->addOverlay('hoa://In/Posts/' . $item);
@@ -30,9 +30,9 @@ class Post {
     return $this->_xyl->xpath("//__current_ns:h1[@id='title']")[0]->readAll();
   }
 
-  public function getFilename() {
+  public function getOutputFilename() {
 
-    return $this->_filename;
+    return $this->_filename . '.html';
   }
 
 }
