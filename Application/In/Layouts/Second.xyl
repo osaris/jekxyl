@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<document xmlns="http://hoa-project.net/xyl/xylophone">
+  <title>Hoa blog second layout</title>
+
+  <header>
+    <h1>Hoa blog second layout</h1>
+  </header>
+
+  <div id="main" />
+
+  <footer>
+    <p>This blog is powered by <a href="http://hoa-project.net/">Hoa</a> and
+    <a href="http://php.net/">PHP</a>.</p>
+  </footer>
+</document>

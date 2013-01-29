@@ -21,11 +21,8 @@ class Builder {
 
   private $_posts = array();
 
-  private $_layout = '';
-
   public function __construct() {
 
-    $this->_layout = new \Hoa\File\Read('hoa://Application/In/Layout.xyl');
   }
 
   public function build() {
@@ -57,7 +54,7 @@ class Builder {
     $dir = new Xylfilter(new \DirectoryIterator('hoa://Application/In/Posts/'));
     foreach ($dir as $item) {
 
-      $post = new \Jekxyl\Post($item, $this->_layout);
+      $post = new \Jekxyl\Post($item);
       $post->render();
 
       $this->_posts[] = $post;
@@ -68,7 +65,7 @@ class Builder {
 
     // Render the index
     $index =  new \Hoa\Xyl(
-              $this->_layout,
+              new \Hoa\File\Read('hoa://Application/In/Layouts/Main.xyl'),
               new \Hoa\File\Write('hoa://Application/Out/index.html'),
               new \Hoa\Xyl\Interpreter\Html()
             );
@@ -76,8 +73,10 @@ class Builder {
     $data = $index->getData();
 
     foreach($this->_posts as $post) {
-      $data->posts[] = array('title' => $post->getTitle(),
-                             'url' => $post->getOutputFilename());
+      $data->posts[] = array(
+        'title' => $post->getTitle(),
+        'url'   => $post->getOutputFilename()
+      );
     }
 
     $index->addOverlay('hoa://Application/In/Index.xyl');
