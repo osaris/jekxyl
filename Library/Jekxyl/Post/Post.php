@@ -18,37 +18,16 @@ class Post {
 
   private $_filename = '';
 
+  private $_metas    = array();
+
   public function __construct( $file ) {
 
     $this->_filename = pathinfo($file, PATHINFO_FILENAME);
 
-    // parse post to extract layout
-    $xyl = new \Hoa\Xyl(
-        new \Hoa\File\Read('hoa://Application/In/Posts/' . $file),
-        new \Hoa\Http\Response(),
-        new \Hoa\Xyl\Interpreter\Html()
-    );
+    $this->extractMetas();
 
-    $metas         = array();
-    $ownerDocument = $xyl->readDOM()->ownerDocument;
-    $xpath         = new \DOMXpath($ownerDocument);
-    $query         = $xpath->query('/processing-instruction(\'xyl-meta\')');
-
-    for($i = 0, $m = $query->length; $i < $m; ++$i) {
-
-        $item    = $query->item($i);
-        $meta = new \Hoa\Xml\Attribute($item->data);
-        $metas[$meta->readAttribute('name')] = $meta->readAttribute('value');
-
-        // If you would like to remove the PI.
-        // Useless for the moment because $xyl isn't the one we render later
-        // $ownerDocument->removeChild($item);
-    }
-
-    $layout_name = empty($metas['layout']) ? 'main' : $metas['layout'];
-    $layout = new \Hoa\File\Read('hoa://Application/In/Layouts/' . $layout_name . '.xyl');
     $this->_xyl =  new \Hoa\Xyl(
-                      $layout,
+                      new \Hoa\File\Read('hoa://Application/In/Layouts/' . $this->getLayoutFileName()),
                       new \Hoa\File\Write('hoa://Application/Out/' . $this->getOutputFilename()),
                       new \Hoa\Xyl\Interpreter\Html()
                     );
@@ -70,6 +49,43 @@ class Post {
   public function getOutputFilename() {
 
     return $this->_filename . '.html';
+  }
+
+  private function getInputFilename() {
+
+    return $this->_filename . '.xyl';
+  }
+
+  private function extractMetas() {
+
+    // parse post to extract layout
+    $xyl = new \Hoa\Xyl(
+        new \Hoa\File\Read('hoa://Application/In/Posts/' . $this->getInputFilename()),
+        new \Hoa\Http\Response(),
+        new \Hoa\Xyl\Interpreter\Html()
+    );
+
+    $ownerDocument = $xyl->readDOM()->ownerDocument;
+    $xpath         = new \DOMXpath($ownerDocument);
+    $query         = $xpath->query('/processing-instruction(\'xyl-meta\')');
+
+    for($i = 0, $m = $query->length; $i < $m; ++$i) {
+
+        $item    = $query->item($i);
+        $meta = new \Hoa\Xml\Attribute($item->data);
+        $this->_metas[$meta->readAttribute('name')] = $meta->readAttribute('value');
+
+        // If you would like to remove the PI.
+        // Useless for the moment because $xyl isn't the one we render later
+        // $ownerDocument->removeChild($item);
+    }
+  }
+
+  private function getLayoutFileName() {
+
+    $layout_name = empty($this->_metas['layout']) ? 'main' : $this->_metas['layout'];
+
+    return $layout_name . '.xyl';
   }
 
 }
