@@ -2,8 +2,10 @@
 
 <overlay xmlns="http://hoa-project.net/xyl/xylophone">
   <div id="main">
-    <li bind="?posts">
-      <a href="(?url)" bind="?title" />
-    </li>
+    <ul>
+      <li bind="?posts">
+        <a href="(?url)" bind="?title" />
+      </li>
+    </ul>
   </div>
 </overlay>

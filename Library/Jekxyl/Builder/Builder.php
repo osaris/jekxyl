@@ -70,14 +70,17 @@ class Builder {
               new \Hoa\Xyl\Interpreter\Html()
             );
 
-    $data = $index->getData();
-
+    $posts = array();
     foreach($this->_posts as $post) {
-      $data->posts[] = array(
+
+      $posts[] = array(
         'title' => $post->getTitle(),
         'url'   => $post->getOutputFilename()
       );
     }
+
+    $data = $index->getData();
+    $data->posts = $posts;
 
     $index->addOverlay('hoa://Application/In/Index.xyl');
     $index->render();
