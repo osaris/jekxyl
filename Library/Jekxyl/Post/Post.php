@@ -4,6 +4,7 @@ namespace {
 
 from('Hoa')
 -> import('File.Write')
+-> import('Stringbuffer.Read')
 -> import('Xyl.~')
 -> import('Xyl.Interpreter.Html.~')
 -> import('Http.Response');
@@ -18,6 +19,8 @@ class Post {
 
   private $_filename = '';
 
+  private $_streamName = '';
+
   private $_metas    = array();
 
   public function __construct( $file ) {
@@ -31,7 +34,8 @@ class Post {
                       new \Hoa\File\Write('hoa://Application/Out/' . $this->getOutputFilename()),
                       new \Hoa\Xyl\Interpreter\Html()
                     );
-    $this->_xyl->addOverlay('hoa://Application/In/Posts/' . $file);
+    $this->_xyl->addOverlay($this->_streamName);
+
     $this->_xyl->interprete();
   }
 
@@ -75,10 +79,13 @@ class Post {
         $meta = new \Hoa\Xml\Attribute($item->data);
         $this->_metas[$meta->readAttribute('name')] = $meta->readAttribute('value');
 
-        // If you would like to remove the PI.
-        // Useless for the moment because $xyl isn't the one we render later
-        // $ownerDocument->removeChild($item);
+        // remove the PI from the output
+        $item->parentNode->removeChild($item);
     }
+
+    $buffer = new \Hoa\Stringbuffer\Read();
+    $buffer->initializeWith($xyl->readXML());
+    $this->_streamName = $buffer->getStreamName();
   }
 
   private function getLayoutFileName() {
