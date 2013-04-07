@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xyl-meta name="layout" value="second"?>
+<?xyl-meta name="title" value="Second post title"?>
 
 <overlay xmlns="http://hoa-project.net/xyl/xylophone">
   <div id="main">

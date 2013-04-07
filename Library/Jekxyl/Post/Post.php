@@ -46,8 +46,7 @@ class Post {
 
   public function getTitle() {
 
-    // this may be extracted from a meta to be independent of document structure
-    return $this->_xyl->xpath("//__current_ns:h1[@id='title']")[0]->readAll();
+    return $this->_metas['title'];
   }
 
   public function getOutputFilename() {
