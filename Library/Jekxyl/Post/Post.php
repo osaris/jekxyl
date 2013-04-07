@@ -36,6 +36,9 @@ class Post {
                     );
     $this->_xyl->addOverlay($this->_streamName);
 
+    $data = $this->_xyl->getData();
+    $data->title = $this->getTitle();
+
     $this->_xyl->interprete();
   }
 

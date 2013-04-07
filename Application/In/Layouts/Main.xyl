@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <document xmlns="http://hoa-project.net/xyl/xylophone">
-  <title>Hoa blog</title>
+  <title bind="?title" />
 
   <header>
     <h1>Hoa blog</h1>
