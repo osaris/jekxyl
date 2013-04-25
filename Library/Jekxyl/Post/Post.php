@@ -77,7 +77,7 @@ class Post {
 
     for($i = 0, $m = $query->length; $i < $m; ++$i) {
 
-        $item    = $query->item($i);
+        $item = $query->item($i);
         $meta = new \Hoa\Xml\Attribute($item->data);
         $this->_metas[$meta->readAttribute('name')] = $meta->readAttribute('value');
 
