@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>Jekxyl</h1>
-        <p>A jekyll like static blog generator with Hoa</p>
+        <p>A jekyll like static blog generator with Hoa. Use power of XYL !</p>
 
         <p class="view"><a href="https://github.com/osaris/jekxyl">View the Project on GitHub <small>osaris/jekxyl</small></a></p>
 
@@ -48,6 +48,24 @@
         </ul>
 
         <h3>Metas</h3>
+
+        <p>Jekxyl uses metas in post file to configure output. Metas are removed
+          from HTML output.<p>
+
+        <h4>layout</h4>
+
+        <p>Meta <code>layout</code> is used to set the layout used for the current
+          blog post. <code>value</code> should match the name of the layout file
+          in <code>Application/In/Layouts</code>.</p>
+
+        <pre><code>&lt;?xyl-meta name="layout" value="main"?></code></pre>
+
+        <h4>title</h4>
+
+        <p>Meta <code>title</code> is used to set the title for the current blog
+          post. It is used for the <code>&lt;title></code> tag of the page.</p>
+
+        <pre><code>&lt;?xyl-meta name="title" value="First post title"?></code></pre>
 
         <h3>Issues and support</h3>
 
