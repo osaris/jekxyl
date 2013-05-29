@@ -3,13 +3,13 @@
 namespace {
 
 from('Jekxyl')
--> import('Builder.Xylfilter')
 -> import('Post.~');
 
 from('Hoa')
 -> import('File.Read')
 -> import('File.Write')
 -> import('File.Directory')
+-> import('File.Finder')
 -> import('Xyl.~')
 -> import('Xyl.Interpreter.Html.~');
 
@@ -51,10 +51,14 @@ class Builder {
   private function build_posts() {
 
     // Loop through the directory listing
-    $dir = new Xylfilter(new \DirectoryIterator('hoa://Application/In/Posts/'));
-    foreach ($dir as $item) {
+    $finder = new \Hoa\File\Finder();
+    $finder->in('hoa://Application/In/Posts/')
+           ->files()
+           ->name('#\.xyl$#');
 
-      $post = new \Jekxyl\Post($item);
+    foreach ($finder as $name) {
+
+      $post = new \Jekxyl\Post($name);
       $post->render();
 
       $this->_posts[] = $post;
