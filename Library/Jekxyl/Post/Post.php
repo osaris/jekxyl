@@ -23,9 +23,15 @@ class Post {
 
   private $_metas    = array();
 
-  public function __construct( $file ) {
+  public function __construct( \Hoa\File\SplFileInfo $file ) {
 
-    $this->_filename = pathinfo($file, PATHINFO_FILENAME);
+    $path            = pathinfo($file->getRelativePathname());
+    $this->_filename = $path['dirname'] . DS . $path['filename'];
+
+    if(!is_dir($path['dirname'])) {
+
+        \Hoa\File\Directory::create('hoa://Application/Out/' . $path['dirname']);
+    }
 
     $this->extractMetas();
 
