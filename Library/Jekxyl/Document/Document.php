@@ -11,21 +11,20 @@ from('Hoa')
 
 }
 
-namespace Jekxyl\Post {
+namespace Jekxyl\Document {
 
-class Post {
+class Document {
 
-  private $_xyl      = null;
-
-  private $_filename = '';
-
+  private $_xyl        = null;
+  private $_file       = null;
+  private $_filename   = '';
   private $_streamName = '';
-
-  private $_metas    = array();
+  private $_metas      = array();
 
   public function __construct( \Hoa\File\SplFileInfo $file ) {
 
     $path            = pathinfo($file->getRelativePathname());
+    $this->_file     = $file;
     $this->_filename = $path['dirname'] . DS . $path['filename'];
 
     if(!is_dir($path['dirname'])) {
@@ -36,7 +35,7 @@ class Post {
     $this->extractMetas();
 
     $this->_xyl =  new \Hoa\Xyl(
-                      new \Hoa\File\Read('hoa://Application/In/Layouts/' . $this->getLayoutFileName()),
+                      new \Hoa\File\Read('hoa://Application/In/Layouts/' . $this->getLayoutFilename()),
                       new \Hoa\File\Write('hoa://Application/Out/' . $this->getOutputFilename()),
                       new \Hoa\Xyl\Interpreter\Html()
                     );
@@ -58,6 +57,11 @@ class Post {
     return $this->_metas['title'];
   }
 
+  public function getFile() {
+
+      return $this->_file;
+  }
+
   public function getOutputFilename() {
 
     return $this->_filename . '.html';
@@ -72,7 +76,7 @@ class Post {
 
     // parse post to extract layout
     $xyl = new \Hoa\Xyl(
-        new \Hoa\File\Read('hoa://Application/In/Posts/' . $this->getInputFilename()),
+        new \Hoa\File\Read($this->getFile()->getPathname()),
         new \Hoa\Http\Response(),
         new \Hoa\Xyl\Interpreter\Html()
     );

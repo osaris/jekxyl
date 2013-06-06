@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xyl-meta name="title" value="Contact"?>
+
+<overlay xmlns="http://hoa-project.net/xyl/xylophone">
+  <yield id="post">
+    <h2>Contact</h2>
+
+    <p>This is a contact page!</p>
+  </yield>
+</overlay>
