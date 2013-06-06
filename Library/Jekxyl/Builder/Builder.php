@@ -3,7 +3,7 @@
 namespace {
 
 from('Jekxyl')
--> import('Post.~');
+-> import('Document.~');
 
 from('Hoa')
 -> import('File.Read')
@@ -33,6 +33,9 @@ class Builder {
     $this->build_posts();
     echo '✔  Posts built', "\n";
 
+    $this->build_pages();
+    echo '✔  Pages built', "\n";
+
     $this->build_index();
     echo '✔  Index built', "\n";
   }
@@ -56,12 +59,27 @@ class Builder {
            ->files()
            ->name('#\.xyl$#');
 
-    foreach ($finder as $name) {
+    foreach ($finder as $file) {
 
-      $post = new \Jekxyl\Post($name);
+      $post = new \Jekxyl\Document($file);
       $post->render();
 
       $this->_posts[] = $post;
+    }
+  }
+
+  private function build_pages() {
+
+    // Loop through the directory listing
+    $finder = new \Hoa\File\Finder();
+    $finder->in('hoa://Application/In/Pages/')
+           ->files()
+           ->name('#\.xyl$#');
+
+    foreach ($finder as $file) {
+
+      $post = new \Jekxyl\Document($file);
+      $post->render();
     }
   }
 
